@@ -10,5 +10,6 @@ public class Main {
 		KlotskiApp app = new KlotskiApp(b);
 		
 		app.setVisible(true);
+		
 	}
 }
