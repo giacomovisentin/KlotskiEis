@@ -120,7 +120,7 @@ public class KlotskiApp extends JFrame {
 		mntmQuit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (new QuitController().confirm(KlotskiApp.this)) {
+				if (new QuitController().confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.this.dispose();
 				}
 			}
@@ -233,7 +233,7 @@ public class KlotskiApp extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
-				if (new QuitController().confirm(KlotskiApp.this)) {
+				if (new QuitController().confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.this.dispose();
 				}
 			}
@@ -345,7 +345,7 @@ public class KlotskiApp extends JFrame {
 		btnQuit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (new QuitController().confirm(KlotskiApp.this)) {
+				if (new QuitController().confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.this.dispose();
 				}
 			}
