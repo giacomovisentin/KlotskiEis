@@ -1,14 +1,12 @@
 package klotski;
 
-import klotski.model.Board;
-import klotski.view.KlotskiApp;
+import javax.swing.SwingUtilities;
+import klotski.view.InitialMenu;
 
 public class Main {
 	public static void main(String[] args) {
-		Board b = new Board();
-
-		KlotskiApp app = new KlotskiApp(b);
-		
-		app.setVisible(true);
+		SwingUtilities.invokeLater(() -> {
+            InitialMenu menu = new InitialMenu();
+        });
 	}
 }
