@@ -26,13 +26,8 @@ import javax.swing.JMenuItem;
 import klotski.model.Board;
 import klotski.controller.AboutController;
 import klotski.controller.LicenseController;
-import klotski.controller.MovePieceController;
-import klotski.controller.OpenController;
-import klotski.controller.QuitController;
-import klotski.controller.ResetPuzzleController;
-import klotski.controller.SaveController;
-import klotski.controller.SelectPieceController;
-import klotski.controller.SetConfigController;
+import klotski.controller.FileController;
+import klotski.controller.PieceController;
 
 public class KlotskiApp extends JFrame {
 	Board board;	
@@ -90,7 +85,7 @@ public class KlotskiApp extends JFrame {
 				if (fc.showSaveDialog(KlotskiApp.this) == 
 						JFileChooser.APPROVE_OPTION) {
 					String path = fc.getSelectedFile().getAbsolutePath();
-					new SaveController(board, Paths.get(path)).save();
+					new FileController(null, board, Paths.get(path)).save();
 				}
 			}
 		});
@@ -106,7 +101,7 @@ public class KlotskiApp extends JFrame {
 				if (fc.showOpenDialog(KlotskiApp.this) == 
 						JFileChooser.APPROVE_OPTION) {
 					String path = fc.getSelectedFile().getAbsolutePath();
-					new OpenController(KlotskiApp.this, board, Paths.get(path))
+					new FileController(KlotskiApp.this, board, Paths.get(path))
 					.open();
 				}
 			}
@@ -120,7 +115,7 @@ public class KlotskiApp extends JFrame {
 		mntmQuit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (new QuitController().confirmQuit(KlotskiApp.this)) {
+				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.this.dispose();
 				}
 			}
@@ -142,7 +137,7 @@ public class KlotskiApp extends JFrame {
 		mntmReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ResetPuzzleController(KlotskiApp.this, board).reset();
+				new FileController(KlotskiApp.this, board, null).reset();
 			}
 		});
 		
@@ -154,7 +149,7 @@ public class KlotskiApp extends JFrame {
 		mntmConfig1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SetConfigController(KlotskiApp.this, board).setConfig(1);
+				new FileController(KlotskiApp.this, board, null).setConfig(1);
 			}
 		});
 		
@@ -166,7 +161,7 @@ public class KlotskiApp extends JFrame {
 		mntmConfig2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SetConfigController(KlotskiApp.this, board).setConfig(2);
+				new FileController(KlotskiApp.this, board, null).setConfig(2);
 			}
 		});
 		
@@ -178,7 +173,7 @@ public class KlotskiApp extends JFrame {
 		mntmConfig3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SetConfigController(KlotskiApp.this, board).setConfig(3);
+				new FileController(KlotskiApp.this, board, null).setConfig(3);
 			}
 		});
 		
@@ -190,7 +185,7 @@ public class KlotskiApp extends JFrame {
 		mntmConfig4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SetConfigController(KlotskiApp.this, board).setConfig(4);
+				new FileController(KlotskiApp.this, board, null).setConfig(4);
 			}
 		});
 		
@@ -233,7 +228,7 @@ public class KlotskiApp extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
-				if (new QuitController().confirmQuit(KlotskiApp.this)) {
+				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.this.dispose();
 				}
 			}
@@ -251,7 +246,7 @@ public class KlotskiApp extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				KlotskiApp.this.requestFocus();
 				storedPoint = e.getPoint();
-				new SelectPieceController(KlotskiApp.this, board).select(e);
+				new PieceController(KlotskiApp.this, board).select(e);
 			}
 			
 			@Override
@@ -265,19 +260,19 @@ public class KlotskiApp extends JFrame {
 					if (Math.abs(dx) > Math.abs(dy)) {
 						// horizontal drag
 						if (dx > 0) {
-							new MovePieceController(KlotskiApp.this, board)
+							new PieceController(KlotskiApp.this, board)
 							.move(1);
 						} else {
-							new MovePieceController(KlotskiApp.this, board)
+							new PieceController(KlotskiApp.this, board)
 							.move(3);
 						}
 					} else {
 						// vertical drag
 						if (dy > 0) {
-							new MovePieceController(KlotskiApp.this, board)
+							new PieceController(KlotskiApp.this, board)
 							.move(2);
 						} else {
-							new MovePieceController(KlotskiApp.this, board)
+							new PieceController(KlotskiApp.this, board)
 							.move(0);
 						}
 					}
@@ -300,19 +295,19 @@ public class KlotskiApp extends JFrame {
 				if (kc == KeyEvent.VK_UP || kc == KeyEvent.VK_W || 
 						kc == KeyEvent.VK_K) {
 					// up
-					new MovePieceController(KlotskiApp.this, board).move(0);
+					new PieceController(KlotskiApp.this, board).move(0);
 				} else if (kc == KeyEvent.VK_RIGHT || kc == KeyEvent.VK_D ||
 						kc == KeyEvent.VK_L) {
 					// right
-					new MovePieceController(KlotskiApp.this, board).move(1);
+					new PieceController(KlotskiApp.this, board).move(1);
 				} else if (kc == KeyEvent.VK_DOWN || kc == KeyEvent.VK_S ||
 						kc == KeyEvent.VK_J) {
 					// down
-					new MovePieceController(KlotskiApp.this, board).move(2);
+					new PieceController(KlotskiApp.this, board).move(2);
 				} else if (kc == KeyEvent.VK_LEFT || kc == KeyEvent.VK_A ||
 						kc == KeyEvent.VK_H) {
 					// left
-					new MovePieceController(KlotskiApp.this, board).move(3);
+					new PieceController(KlotskiApp.this, board).move(3);
 				}
 			}
 
@@ -334,7 +329,7 @@ public class KlotskiApp extends JFrame {
 		btnReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new ResetPuzzleController(KlotskiApp.this, board).reset();
+				new FileController(KlotskiApp.this, board, null).reset();
 			}
 		});
 		btnReset.setFocusable(false);
@@ -345,7 +340,7 @@ public class KlotskiApp extends JFrame {
 		btnQuit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (new QuitController().confirmQuit(KlotskiApp.this)) {
+				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.this.dispose();
 				}
 			}
@@ -358,7 +353,7 @@ public class KlotskiApp extends JFrame {
 		btnUp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new MovePieceController(KlotskiApp.this, board).move(0);
+				new PieceController(KlotskiApp.this, board).move(0);
 			}
 		});
 		btnUp.setFocusable(false);
@@ -369,7 +364,7 @@ public class KlotskiApp extends JFrame {
 		btnRight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new MovePieceController(KlotskiApp.this, board).move(1);
+				new PieceController(KlotskiApp.this, board).move(1);
 			}
 		});
 		btnRight.setFocusable(false);
@@ -380,7 +375,7 @@ public class KlotskiApp extends JFrame {
 		btnLeft.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new MovePieceController(KlotskiApp.this, board).move(3);
+				new PieceController(KlotskiApp.this, board).move(3);
 			}
 		});
 		btnLeft.setFocusable(false);
@@ -391,7 +386,7 @@ public class KlotskiApp extends JFrame {
 		btnDown.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new MovePieceController(KlotskiApp.this, board).move(2);
+				new PieceController(KlotskiApp.this, board).move(2);
 			}
 		});
 		btnDown.setFocusable(false);

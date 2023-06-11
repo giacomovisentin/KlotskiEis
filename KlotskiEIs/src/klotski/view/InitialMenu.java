@@ -3,8 +3,7 @@ package klotski.view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import klotski.controller.OpenController;
-import klotski.controller.QuitController;
+import klotski.controller.FileController;
 import klotski.model.Board;
 
 import java.awt.*;
@@ -51,7 +50,7 @@ public class InitialMenu extends JFrame {
 				if (fc.showOpenDialog(app) == JFileChooser.APPROVE_OPTION) {
 					
 					String path = fc.getSelectedFile().getAbsolutePath();
-					new OpenController(app, b, Paths.get(path)).open();
+					new FileController(app, b, Paths.get(path)).open();
 					app.setVisible(true);
 					setVisible(false);
 				}
@@ -60,7 +59,7 @@ public class InitialMenu extends JFrame {
 
         esciButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-				if (new QuitController().confirmExit(InitialMenu.this)) {
+				if (new FileController(null, null, null).confirmExit(InitialMenu.this)) {
 					InitialMenu.this.dispose();
 				}
 			}
@@ -75,13 +74,3 @@ public class InitialMenu extends JFrame {
         setVisible(true);
     }
 }
-
-
-
-
-
-
-
-
-
-

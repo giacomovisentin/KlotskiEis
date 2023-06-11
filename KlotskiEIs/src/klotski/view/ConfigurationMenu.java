@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import klotski.model.Board;
-import klotski.controller.SetConfigController;
+import klotski.controller.FileController;
 
 public class ConfigurationMenu extends JFrame {
 	
@@ -86,7 +86,7 @@ public class ConfigurationMenu extends JFrame {
         
         conf1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	new SetConfigController(app, b).setConfig(1);
+            	new FileController(app, b, null).setConfig(1);
             	im.setVisible(false); 
             	setVisible(false);
             	app.setVisible(true);
@@ -95,7 +95,7 @@ public class ConfigurationMenu extends JFrame {
         
         conf2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	new SetConfigController(app, b).setConfig(2);
+            	new FileController(app, b, null).setConfig(2);
             	im.setVisible(false);
             	setVisible(false);
             	app.setVisible(true);
@@ -104,7 +104,7 @@ public class ConfigurationMenu extends JFrame {
         
         conf3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	new SetConfigController(app, b).setConfig(3);
+            	new FileController(app, b, null).setConfig(3);
             	im.setVisible(false);
             	setVisible(false);
             	app.setVisible(true);
@@ -113,7 +113,7 @@ public class ConfigurationMenu extends JFrame {
         
         conf4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	new SetConfigController(app, b).setConfig(4);
+            	new FileController(app, b, null).setConfig(4);
             	im.setVisible(false);
             	setVisible(false);
             	app.setVisible(true);
