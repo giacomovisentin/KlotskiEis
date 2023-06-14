@@ -34,6 +34,7 @@ public class KlotskiApp extends JFrame {
 	PuzzleView puzzleView;
 	JLabel movesCounter;
 	JButton btnReset;
+	JButton btnHint;
 	Point storedPoint;
 	
 	//Necessary to suppress an Eclipse warning
@@ -45,6 +46,7 @@ public class KlotskiApp extends JFrame {
 	public JLabel getMovesCounter() { return movesCounter; }
 	public PuzzleView getPuzzleView() { return puzzleView; }
 	public JButton getResetButton() { return btnReset; }
+	public JButton getHintButton() { return btnHint; }
 
 	/**
 	 * Create the frame.
@@ -328,7 +330,19 @@ public class KlotskiApp extends JFrame {
 		/*******************\
 		 *   GUI BUttons   *
 		\*******************/
-
+		
+		btnHint = new JButton("Hint");
+		//Path solvePath = Paths.get("C:\\Users\\Bartolomeo Morellato\\Desktop\\datiSolver.txt");
+		btnHint.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new GameController(KlotskiApp.this, board).nextBestMove();
+			}
+		});
+		btnHint.setFocusable(false);
+		btnHint.setBounds(425, 25, 100, 25);
+		contentPane.add(btnHint);
+		
 		btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			@Override

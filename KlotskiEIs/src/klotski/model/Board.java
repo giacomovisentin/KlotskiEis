@@ -1,5 +1,6 @@
 package klotski.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,6 +91,10 @@ public class Board {
 	 * @return the current number of moves
 	 */
 	public int getMoves() { return moves; }
+	
+	public void setMoves(int m){
+		this.moves = m;
+	}
 	
 	/**
 	 * selectedPiece getter
@@ -286,4 +291,14 @@ public class Board {
 		}
 		return out;
 	}
+	
+	public List<String> getBoard(){
+		List<String> boardList = new ArrayList<>();
+		//boardList.add(this.getMoves()+"");
+		for (Piece p : pieces) {
+			boardList.add(p.toString());
+		}
+		return boardList;
+	}
+
 }
