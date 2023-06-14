@@ -27,7 +27,7 @@ import klotski.model.Board;
 import klotski.controller.AboutController;
 import klotski.controller.LicenseController;
 import klotski.controller.FileController;
-import klotski.controller.PieceController;
+import klotski.controller.GameController;
 
 public class KlotskiApp extends JFrame {
 	Board board;	
@@ -86,6 +86,8 @@ public class KlotskiApp extends JFrame {
 						JFileChooser.APPROVE_OPTION) {
 					String path = fc.getSelectedFile().getAbsolutePath();
 					new FileController(null, board, Paths.get(path)).save();
+					KlotskiApp.this.dispose();
+					InitialMenu menu = new InitialMenu();
 				}
 			}
 		});
@@ -103,6 +105,7 @@ public class KlotskiApp extends JFrame {
 					String path = fc.getSelectedFile().getAbsolutePath();
 					new FileController(KlotskiApp.this, board, Paths.get(path))
 					.open();
+					
 				}
 			}
 		});
@@ -117,6 +120,7 @@ public class KlotskiApp extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.this.dispose();
+					InitialMenu menu = new InitialMenu();
 				}
 			}
 		});
@@ -246,7 +250,7 @@ public class KlotskiApp extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				KlotskiApp.this.requestFocus();
 				storedPoint = e.getPoint();
-				new PieceController(KlotskiApp.this, board).select(e);
+				new GameController(KlotskiApp.this, board).select(e);
 			}
 			
 			@Override
@@ -260,19 +264,19 @@ public class KlotskiApp extends JFrame {
 					if (Math.abs(dx) > Math.abs(dy)) {
 						// horizontal drag
 						if (dx > 0) {
-							new PieceController(KlotskiApp.this, board)
+							new GameController(KlotskiApp.this, board)
 							.move(1);
 						} else {
-							new PieceController(KlotskiApp.this, board)
+							new GameController(KlotskiApp.this, board)
 							.move(3);
 						}
 					} else {
 						// vertical drag
 						if (dy > 0) {
-							new PieceController(KlotskiApp.this, board)
+							new GameController(KlotskiApp.this, board)
 							.move(2);
 						} else {
-							new PieceController(KlotskiApp.this, board)
+							new GameController(KlotskiApp.this, board)
 							.move(0);
 						}
 					}
@@ -295,19 +299,19 @@ public class KlotskiApp extends JFrame {
 				if (kc == KeyEvent.VK_UP || kc == KeyEvent.VK_W || 
 						kc == KeyEvent.VK_K) {
 					// up
-					new PieceController(KlotskiApp.this, board).move(0);
+					new GameController(KlotskiApp.this, board).move(0);
 				} else if (kc == KeyEvent.VK_RIGHT || kc == KeyEvent.VK_D ||
 						kc == KeyEvent.VK_L) {
 					// right
-					new PieceController(KlotskiApp.this, board).move(1);
+					new GameController(KlotskiApp.this, board).move(1);
 				} else if (kc == KeyEvent.VK_DOWN || kc == KeyEvent.VK_S ||
 						kc == KeyEvent.VK_J) {
 					// down
-					new PieceController(KlotskiApp.this, board).move(2);
+					new GameController(KlotskiApp.this, board).move(2);
 				} else if (kc == KeyEvent.VK_LEFT || kc == KeyEvent.VK_A ||
 						kc == KeyEvent.VK_H) {
 					// left
-					new PieceController(KlotskiApp.this, board).move(3);
+					new GameController(KlotskiApp.this, board).move(3);
 				}
 			}
 
@@ -342,6 +346,7 @@ public class KlotskiApp extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.this.dispose();
+					InitialMenu menu = new InitialMenu();
 				}
 			}
 		});
@@ -353,7 +358,7 @@ public class KlotskiApp extends JFrame {
 		btnUp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new PieceController(KlotskiApp.this, board).move(0);
+				new GameController(KlotskiApp.this, board).move(0);
 			}
 		});
 		btnUp.setFocusable(false);
@@ -364,7 +369,7 @@ public class KlotskiApp extends JFrame {
 		btnRight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new PieceController(KlotskiApp.this, board).move(1);
+				new GameController(KlotskiApp.this, board).move(1);
 			}
 		});
 		btnRight.setFocusable(false);
@@ -375,7 +380,7 @@ public class KlotskiApp extends JFrame {
 		btnLeft.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new PieceController(KlotskiApp.this, board).move(3);
+				new GameController(KlotskiApp.this, board).move(3);
 			}
 		});
 		btnLeft.setFocusable(false);
@@ -386,7 +391,7 @@ public class KlotskiApp extends JFrame {
 		btnDown.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new PieceController(KlotskiApp.this, board).move(2);
+				new GameController(KlotskiApp.this, board).move(2);
 			}
 		});
 		btnDown.setFocusable(false);

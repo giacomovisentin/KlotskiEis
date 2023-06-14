@@ -117,6 +117,12 @@ public class PuzzleView extends JPanel {
 			offScreenGraphics.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,45));
 			offScreenGraphics.drawString("Congratulations!", 10, 72);
 			offScreenGraphics.drawString("You win!", 105, 172);
+			try {
+	            Thread.sleep(2000); // Attendi 2 secondi
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+			InitialMenu menu = new InitialMenu();
 		}
 	}
 	
