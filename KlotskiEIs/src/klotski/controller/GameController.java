@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import klotski.model.Board;
 import klotski.view.KlotskiApp;
 
-public class PieceController {
+public class GameController {
 	final KlotskiApp app;
 	final Board b;
 	
@@ -14,7 +14,7 @@ public class PieceController {
 	 * @param app the view application
 	 * @param b the model board
 	 */
-	public PieceController(KlotskiApp app, Board b) {
+	public GameController(KlotskiApp app, Board b) {
 		this.app = app;
 		this.b = b;
 	}

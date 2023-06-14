@@ -23,6 +23,7 @@ public class FileController {
 	 * Basic constructor
 	 * @param app the view application
 	 * @param b the model board
+	 * @param p the path of the file 
 	 */
 	public FileController(KlotskiApp app, Board b, Path p) {
 		this.app = app;
