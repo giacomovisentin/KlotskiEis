@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -37,9 +38,15 @@ public class FileController {
 	 * @return true if successful, false otherwise
 	 */
 	public boolean open() {
-		Charset charset = Charset.forName("UTF-8");
 		try {
-			List<String> lines = Files.readAllLines(p, charset);
+			List<String> lines = new ArrayList<>();
+			for(int j = 1; j < 11; j++) {
+	    		try {
+					lines.add(Files.readAllLines(p).get(j));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			b.setPieces(lines);
 		} catch (Exception e) {
 			System.err.println(e);
@@ -47,6 +54,15 @@ public class FileController {
 		}
 		app.getPuzzleView().refresh();
 		app.getMovesCounter().setText(Integer.toString(b.getMoves()));
+		int conf = 1;
+		try {
+			conf = Integer.parseInt(Files.readAllLines(p).get(0));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		b.setConfig(conf);
 		return true;
 	}
 	
@@ -85,7 +101,7 @@ public class FileController {
 	 */
 	public boolean save() {
 		// Convert the string to a byte array.
-	    String s = b.toString();
+	    String s = b.getConfig() + "\n" + b.toString();
 	    byte data[] = s.getBytes();
 
 	    try (OutputStream out = new BufferedOutputStream(

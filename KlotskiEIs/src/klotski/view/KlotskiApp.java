@@ -330,7 +330,6 @@ public class KlotskiApp extends JFrame {
 		\*******************/
 		
 		btnHint = new JButton("Hint");
-		//Path solvePath = Paths.get("C:\\Users\\Bartolomeo Morellato\\Desktop\\datiSolver.txt");
 		btnHint.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
