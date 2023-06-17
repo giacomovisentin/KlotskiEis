@@ -241,7 +241,6 @@ public class KlotskiApp extends JFrame {
 		});
 		
 		
-		
 		/*******************\
 		 *   Puzzle View   *
 		\*******************/
@@ -324,7 +323,6 @@ public class KlotskiApp extends JFrame {
 			public void keyTyped(KeyEvent e) {}
 			
 		});
-		
 		
 		
 		/*******************\

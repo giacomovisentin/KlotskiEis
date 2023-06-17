@@ -2,6 +2,9 @@ package klotski.controller;
 
 import java.awt.event.MouseEvent;
 import java.util.*;
+
+import javax.swing.JOptionPane;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -64,18 +67,24 @@ public class GameController {
 	}
 	
 	public boolean nextBestMove() {
-		System.out.println("-------- Start SOLVE ---------");
-		//Charset charset = Charset.forName("UTF-8");
 		boolean found = false;
 		int end = 12;
 		int m = b.getMoves();
 		
 		//Funzionerà in un file .jar?????? mi sa di no. Occhio anche a initialMenu.java...
-		 // Ottenere un riferimento al ClassLoader corrente
         ClassLoader classLoader = GameController.class.getClassLoader();
-        // Ottenere il percorso assoluto del file dalla cartella di risorse
-        String fileName = "conf2Solver.txt";
+        String fileName = "";
         Path p = null;
+        int conf = b.getConfig();
+        
+        if(conf == 2) {
+        	fileName = "conf2Solver.txt";
+        } else if(conf == 4) {
+        	fileName = "conf4Solver.txt";
+        } else {
+        	JOptionPane.showMessageDialog(app, "Unable to find the next best move", "Hint error", JOptionPane.ERROR_MESSAGE);
+        	return false;
+        }
         
 		try {
 			p = Paths.get(classLoader.getResource(fileName).toURI());
@@ -84,12 +93,12 @@ public class GameController {
 		}
         
 	    List<String> lines = new ArrayList<>();
+    	
 	    try {
 			end = Files.readAllLines(p).size();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	    System.out.println("end: " + end);
 	    for(int i = 0; !found && i < end;) {
 	    	for(int j = 0; j < 11; i++) {
 	    		try {
@@ -99,16 +108,11 @@ public class GameController {
 				}
 	    		j++;
 	    	}
-	    	
+
 	    	lines.remove(0);
-		    System.out.println("CURRENT BOARD");
-		    System.out.println(b.getBoard().toString());
-	    	System.out.println(lines.toString());
-	    	System.out.println("Match?");
 	    	
 	    	if(lines.equals(b.getBoard())) {
 	    		lines.removeAll(lines);
-	    		System.out.println("********* MATCH! *********");
 	    		for(int r = i; r < i+11; r++) {
 	    			try {
 						lines.add(Files.readAllLines(p).get(r));
@@ -116,7 +120,6 @@ public class GameController {
 						e.printStackTrace();
 					}
 	    		}
-	    		System.out.println(lines.toString());
 	    		try {
 					b.setPieces(lines);
 				} catch (Exception e) {
@@ -126,21 +129,16 @@ public class GameController {
 	    		found = true;
 	    	} else {
 	    		lines.removeAll(lines);
-	    		System.out.println("Not yet found");
 	    	}
-	    	//System.out.println(lines.toString());
 	    }
 	    
-	    //System.out.println(b.getMoves());
 	    if(found) {
 	    	b.setMoves(++m);
 			app.getPuzzleView().refresh();
 			app.getMovesCounter().setText(Integer.toString(b.getMoves()));
 	    } else {
-	    	System.out.println("***** NULLA DA FARE*****");
+	    	JOptionPane.showMessageDialog(app, "Unable to find the next best move", "Hint error", JOptionPane.ERROR_MESSAGE);
 	    }
-		
-		System.out.println("-------- End SOLVE ---------");
-		return true;
+		return found;
 	}
 }
