@@ -65,7 +65,7 @@ public class Board {
 	public boolean setPieces(List<String> lines) {
 		int i;
 		String[] tokens;
-		if (lines.size() < 1 || lines.size() > this.width * this.height) {
+		if (lines.size() < 1 || lines.size() > this.width * this.height + 1) {
 			throw new IllegalArgumentException("Illegal list of lines");
 		}
 		this.moves = Integer.parseInt(lines.get(0).trim());
@@ -294,11 +294,12 @@ public class Board {
 	
 	public List<String> getBoard(){
 		List<String> boardList = new ArrayList<>();
-		//boardList.add(this.getMoves()+"");
 		for (Piece p : pieces) {
 			boardList.add(p.toString());
 		}
 		return boardList;
 	}
+	
+	public int getConfig() { return this.configuration; }
 
 }
