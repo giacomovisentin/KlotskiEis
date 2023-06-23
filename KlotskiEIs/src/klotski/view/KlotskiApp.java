@@ -37,6 +37,20 @@ public class KlotskiApp extends JFrame {
 	JButton btnHint;
 	Point storedPoint;
 	
+private static KlotskiApp instance;
+	
+	public static KlotskiApp getInstance(Board b) {
+		if (instance == null) {
+			instance = new KlotskiApp(b);
+		}
+		return instance;
+	}
+	
+	public static void close() {
+		instance.dispose();
+		instance = null;
+	}
+	
 	//Necessary to suppress an Eclipse warning
 	private static final long serialVersionUID = 5052390254637954176L;
 	
@@ -88,7 +102,7 @@ public class KlotskiApp extends JFrame {
 						JFileChooser.APPROVE_OPTION) {
 					String path = fc.getSelectedFile().getAbsolutePath();
 					new FileController(null, board, Paths.get(path)).save();
-					KlotskiApp.this.dispose();
+					KlotskiApp.close();
 					InitialMenu menu = new InitialMenu();
 				}
 			}
@@ -121,7 +135,7 @@ public class KlotskiApp extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
-					KlotskiApp.this.dispose();
+					KlotskiApp.close();
 					InitialMenu menu = new InitialMenu();
 				}
 			}
@@ -235,7 +249,7 @@ public class KlotskiApp extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent we) {
 				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
-					KlotskiApp.this.dispose();
+					KlotskiApp.close();
 				}
 			}
 		});
@@ -245,7 +259,7 @@ public class KlotskiApp extends JFrame {
 		 *   Puzzle View   *
 		\*******************/
 		
-		puzzleView = new PuzzleView(board);
+		puzzleView = new PuzzleView(instance, board);
 		puzzleView.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -356,7 +370,7 @@ public class KlotskiApp extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
-					KlotskiApp.this.dispose();
+					KlotskiApp.close();
 					InitialMenu menu = new InitialMenu();
 				}
 			}

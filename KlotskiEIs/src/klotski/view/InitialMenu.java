@@ -32,7 +32,7 @@ public class InitialMenu extends JFrame {
         nuovaPartitaButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	Board b = new Board();
-        		KlotskiApp app = new KlotskiApp(b);
+        		KlotskiApp app = KlotskiApp.getInstance(b);
         		
         		ConfigurationMenu conf = new ConfigurationMenu(app, b, InitialMenu.this);
         		conf.setVisible(true);
@@ -45,7 +45,7 @@ public class InitialMenu extends JFrame {
         		JFileChooser fc = new JFileChooser();
         		
         		Board b = new Board();
-        		KlotskiApp app = new KlotskiApp(b);
+        		KlotskiApp app = KlotskiApp.getInstance(b);
  
 				if (fc.showOpenDialog(app) == JFileChooser.APPROVE_OPTION) {
 					

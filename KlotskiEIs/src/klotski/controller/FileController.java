@@ -40,7 +40,7 @@ public class FileController {
 	public boolean open() {
 		try {
 			List<String> lines = new ArrayList<>();
-			for(int j = 1; j < 11; j++) {
+			for(int j = 1; j < 12; j++) {
 	    		try {
 					lines.add(Files.readAllLines(p).get(j));
 				} catch (IOException e) {
