@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import klotski.model.Board;
@@ -13,7 +15,8 @@ import klotski.model.Piece;
 
 public class PuzzleView extends JPanel {
 	private static final long serialVersionUID = 3251334679791843551L;
-
+	
+	KlotskiApp app;
 	Board board;
 	
 	/** Off-screen image for drawing (and Graphics object) */
@@ -33,7 +36,8 @@ public class PuzzleView extends JPanel {
 	 * Basic constructor
 	 * @param b the model Board
 	 */
-	public PuzzleView(Board b) {
+	public PuzzleView(KlotskiApp p, Board b) {
+		this.app = p;
 		this.board = b;
 	}
 	
@@ -113,12 +117,16 @@ public class PuzzleView extends JPanel {
 		
 		// congratulate the player if he/she has won
 		if (board.checkWin()) {
-			offScreenGraphics.setColor(Color.black);
-			offScreenGraphics.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,45));
-			offScreenGraphics.drawString("Congratulations!", 10, 72);
-			offScreenGraphics.drawString("You win!", 105, 172);
+			showWin();
+			KlotskiApp.close();
 			InitialMenu menu = new InitialMenu();
 		}
+	}
+	
+	public void showWin() {
+		Image resizedIcon = new ImageIcon(this.getClass().getResource("/win.png")).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);;
+        ImageIcon icon = new ImageIcon(resizedIcon);
+		JOptionPane.showMessageDialog(app, "<html><h1 style='font-size: 36pt;'>Congratulations! You win!", "Klotski - WIN", JOptionPane.INFORMATION_MESSAGE, icon);
 	}
 	
 	/**

@@ -76,7 +76,7 @@ public class GameController {
         String fileName = "";
         Path p = null;
         int conf = b.getConfig();
-        
+
         if(conf == 2) {
         	fileName = "conf2Solver.txt";
         } else if(conf == 4) {
