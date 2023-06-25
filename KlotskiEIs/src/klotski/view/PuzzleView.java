@@ -119,7 +119,7 @@ public class PuzzleView extends JPanel {
 		if (board.checkWin()) {
 			showWin();
 			KlotskiApp.close();
-			InitialMenu menu = new InitialMenu();
+			new InitialMenu();
 		}
 	}
 	

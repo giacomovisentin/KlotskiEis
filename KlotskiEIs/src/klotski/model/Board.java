@@ -2,6 +2,7 @@ package klotski.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Represents the entire game board, containing several pieces
@@ -16,6 +17,7 @@ public class Board {
 	int moves; // number of moves the player has made
 	int configuration;
 	boolean hasWon;
+	Stack<List<String>> pila;
 	
 	/**
 	 * Basic constructor. Initializes height and width to standard klotski size.
@@ -24,11 +26,9 @@ public class Board {
 	public Board() {
 		this.pieces = new Piece[10];
 		this.configuration = 1;
-		
+		this.pila = new Stack<>();
 		// initialize all pieces to configuration 1, set moves to 0, set
 		// selectedPiece to null, and set hasWon to false
-		reset();
-		
 		this.height = 5;
 		this.width = 4;
 	}
@@ -43,6 +43,7 @@ public class Board {
 		this.width = 4;
 		this.moves = 0;
 		this.configuration = 1;
+		this.pila = new Stack<>();
 		this.hasWon = false;
 		this.selected = null;
 	}
@@ -219,14 +220,28 @@ public class Board {
 		// if we've gotten here it means we're clear to move the selected piece
 		selected.move(direction);
 		++moves;
+		pushIntoStack();
 		return true;
+	}
+	
+	public boolean undo() {
+		
+		if (this.moves > 0 && pila.size() > 1) {
+			--this.moves;
+			pila.pop();
+			setPieces(pila.peek());
+			return true;
+		}
+		else 
+			return false;
 	}
 
 	/*
 	 * Sets all pieces to their original position for the current configuration,
-	 * sets moves to 0, sets selectedPiece to null, and sets hasWon to false
+	 * sets moves to 0, sets selectedPiece to null, empties the stack and sets hasWon to false
 	 */
 	public void reset() {
+		pila.clear();
 		pieces = new Piece[10];
 		if (configuration == 1) {
 			pieces[0] = new Piece(1, 0, 2, 2);
@@ -277,6 +292,7 @@ public class Board {
 		moves = 0;
 		selected = null;
 		hasWon = false;
+		pushIntoStack();
 	}
 	
 	/**
@@ -301,5 +317,15 @@ public class Board {
 	}
 	
 	public int getConfig() { return this.configuration; }
+	
+	public void pushIntoStack() {
+		List<String> lines = new ArrayList<>();
+		lines.add(""+this.moves);
+		lines.addAll(1,getBoard());
+		pila.push(lines);
+	}
+	
+	public void emptyStack() { pila.clear(); }
 
 }
+	

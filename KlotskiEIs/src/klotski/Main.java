@@ -6,7 +6,7 @@ import klotski.view.InitialMenu;
 public class Main {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
-            InitialMenu menu = new InitialMenu();
+            new InitialMenu();
         });
 	}
 }

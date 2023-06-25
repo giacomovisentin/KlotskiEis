@@ -21,7 +21,7 @@ public class FileController {
 	final Path p;
 	
 	/**
-	 * Basic constructor
+	 * Basic constructor used by the open() method
 	 * @param app the view application
 	 * @param b the model board
 	 * @param p the path of the file 
@@ -33,11 +33,45 @@ public class FileController {
 	}
 	
 	/**
+	 * Basic constructor used by the save() method
+	 * @param b the model board
+	 * @param p the path of the file 
+	 */
+	public FileController(Board b, Path p) {
+		this.app = null;
+		this.b = b;
+		this.p = p;
+	}
+	
+	/**
+	 * Basic constructor used by the reset() and setConfig() methods
+	 * @param app the view application
+	 * @param b the model board
+	 */
+	public FileController(KlotskiApp app, Board b) {
+		this.app = app;
+		this.b = b;
+		this.p = null;
+	}
+	
+	/**
+	 * Basic constructor used by the confirmQuit() method
+	 * @param b the model board
+	 */
+	public FileController(Board b) {
+		this.app = null;
+		this.b = b;
+		this.p = null;
+	}
+	
+	/**
 	 * Reads in a saved game state text file and replaces the current board 
 	 * with it
 	 * @return true if successful, false otherwise
 	 */
 	public boolean open() {
+		b.reset();
+		b.emptyStack();
 		try {
 			List<String> lines = new ArrayList<>();
 			for(int j = 1; j < 12; j++) {
@@ -63,6 +97,7 @@ public class FileController {
 			e.printStackTrace();
 		}
 		b.setConfig(conf);
+		b.pushIntoStack();
 		return true;
 	}
 	

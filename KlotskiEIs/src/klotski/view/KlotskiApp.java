@@ -35,6 +35,7 @@ public class KlotskiApp extends JFrame {
 	JLabel movesCounter;
 	JButton btnReset;
 	JButton btnHint;
+	JButton btnUndo;
 	Point storedPoint;
 	
 private static KlotskiApp instance;
@@ -61,6 +62,8 @@ private static KlotskiApp instance;
 	public PuzzleView getPuzzleView() { return puzzleView; }
 	public JButton getResetButton() { return btnReset; }
 	public JButton getHintButton() { return btnHint; }
+	public JButton getUndoButton() { return btnUndo; }
+
 
 	/**
 	 * Create the frame.
@@ -101,9 +104,9 @@ private static KlotskiApp instance;
 				if (fc.showSaveDialog(KlotskiApp.this) == 
 						JFileChooser.APPROVE_OPTION) {
 					String path = fc.getSelectedFile().getAbsolutePath();
-					new FileController(null, board, Paths.get(path)).save();
+					new FileController(board, Paths.get(path)).save();
 					KlotskiApp.close();
-					InitialMenu menu = new InitialMenu();
+					new InitialMenu();
 				}
 			}
 		});
@@ -134,9 +137,9 @@ private static KlotskiApp instance;
 		mntmQuit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
+				if (new FileController(b).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.close();
-					InitialMenu menu = new InitialMenu();
+					new InitialMenu();
 				}
 			}
 		});
@@ -157,7 +160,7 @@ private static KlotskiApp instance;
 		mntmReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FileController(KlotskiApp.this, board, null).reset();
+				new FileController(KlotskiApp.this, board).reset();
 			}
 		});
 		
@@ -169,7 +172,7 @@ private static KlotskiApp instance;
 		mntmConfig1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FileController(KlotskiApp.this, board, null).setConfig(1);
+				new FileController(KlotskiApp.this, board).setConfig(1);
 			}
 		});
 		
@@ -181,7 +184,7 @@ private static KlotskiApp instance;
 		mntmConfig2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FileController(KlotskiApp.this, board, null).setConfig(2);
+				new FileController(KlotskiApp.this, board).setConfig(2);
 			}
 		});
 		
@@ -193,7 +196,7 @@ private static KlotskiApp instance;
 		mntmConfig3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FileController(KlotskiApp.this, board, null).setConfig(3);
+				new FileController(KlotskiApp.this, board).setConfig(3);
 			}
 		});
 		
@@ -205,7 +208,7 @@ private static KlotskiApp instance;
 		mntmConfig4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FileController(KlotskiApp.this, board, null).setConfig(4);
+				new FileController(KlotskiApp.this, board).setConfig(4);
 			}
 		});
 		
@@ -248,7 +251,7 @@ private static KlotskiApp instance;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
-				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
+				if (new FileController(b).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.close();
 				}
 			}
@@ -351,27 +354,38 @@ private static KlotskiApp instance;
 			}
 		});
 		btnHint.setFocusable(false);
-		btnHint.setBounds(425, 25, 100, 25);
+		btnHint.setBounds(475, 25, 100, 25);
 		contentPane.add(btnHint);
 		
 		btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new FileController(KlotskiApp.this, board, null).reset();
+				new FileController(KlotskiApp.this, board).reset();
 			}
 		});
 		btnReset.setFocusable(false);
-		btnReset.setBounds(525, 25, 100, 25);
+		btnReset.setBounds(475, 50, 100, 25);
 		contentPane.add(btnReset);
+		
+		btnUndo = new JButton("Undo");
+		btnUndo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new GameController(KlotskiApp.this, board).undo();
+			}
+		});
+		btnUndo.setFocusable(false);
+		btnUndo.setBounds(475, 75, 100, 25);
+		contentPane.add(btnUndo);
 		
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (new FileController(null, b, null).confirmQuit(KlotskiApp.this)) {
+				if (new FileController(b).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.close();
-					InitialMenu menu = new InitialMenu();
+					new InitialMenu();
 				}
 			}
 		});
@@ -387,7 +401,7 @@ private static KlotskiApp instance;
 			}
 		});
 		btnUp.setFocusable(false);
-		btnUp.setBounds(525, 150, 50, 25);
+		btnUp.setBounds(525, 200, 50, 25);
 		contentPane.add(btnUp);
 		
 		JButton btnRight = new JButton("→");
@@ -398,7 +412,7 @@ private static KlotskiApp instance;
 			}
 		});
 		btnRight.setFocusable(false);
-		btnRight.setBounds(575, 200, 50, 25);
+		btnRight.setBounds(575, 250, 50, 25);
 		contentPane.add(btnRight);
 		
 		JButton btnLeft = new JButton("←");
@@ -409,7 +423,7 @@ private static KlotskiApp instance;
 			}
 		});
 		btnLeft.setFocusable(false);
-		btnLeft.setBounds(475, 200, 50, 25);
+		btnLeft.setBounds(475, 250, 50, 25);
 		contentPane.add(btnLeft);
 		
 		JButton btnDown = new JButton("↓");
@@ -420,7 +434,7 @@ private static KlotskiApp instance;
 			}
 		});
 		btnDown.setFocusable(false);
-		btnDown.setBounds(525, 250, 50, 25);
+		btnDown.setBounds(525, 300, 50, 25);
 		contentPane.add(btnDown);
 		
 		
@@ -430,11 +444,11 @@ private static KlotskiApp instance;
 		\******************/
 
 		JLabel lblMoves = new JLabel("Moves:");
-		lblMoves.setBounds(475, 112, 66, 15);
+		lblMoves.setBounds(475, 150, 66, 15);
 		contentPane.add(lblMoves);
 		
 		movesCounter = new JLabel("0");
-		movesCounter.setBounds(550, 112, 66, 15);
+		movesCounter.setBounds(550, 150, 66, 15);
 		contentPane.add(movesCounter);
 	}
 }
