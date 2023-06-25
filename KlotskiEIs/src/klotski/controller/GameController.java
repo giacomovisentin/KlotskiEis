@@ -43,6 +43,16 @@ public class GameController {
 			return false;
 	}
 	
+	public boolean undo() {
+		if (b.undo()) {
+			app.getMovesCounter().setText(Integer.toString(b.getMoves()));
+			app.getPuzzleView().refresh();
+			return true;
+		}
+		else
+			return false;
+	}
+	
 	/**
 	 * Extracts the x and y coordinates of the point clicked and attempts to
 	 * select the Piece occupying that point
@@ -134,6 +144,7 @@ public class GameController {
 	    
 	    if(found) {
 	    	b.setMoves(++m);
+	    	b.pushIntoStack();
 			app.getPuzzleView().refresh();
 			app.getMovesCounter().setText(Integer.toString(b.getMoves()));
 	    } else {
