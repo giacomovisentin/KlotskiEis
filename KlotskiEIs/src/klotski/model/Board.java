@@ -27,6 +27,7 @@ public class Board {
 		this.pieces = new Piece[10];
 		this.configuration = 1;
 		this.pila = new Stack<>();
+		reset();
 		// initialize all pieces to configuration 1, set moves to 0, set
 		// selectedPiece to null, and set hasWon to false
 		this.height = 5;
