@@ -48,11 +48,12 @@ private static KlotskiApp instance;
 	}
 	
 	public static void close() {
-		instance.dispose();
-		instance = null;
+		if(instance != null) {
+			instance.dispose();
+			instance = null;
+		}
 	}
 	
-	//Necessary to suppress an Eclipse warning
 	private static final long serialVersionUID = 5052390254637954176L;
 	
 	private JPanel contentPane;
