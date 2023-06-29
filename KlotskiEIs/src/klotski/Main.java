@@ -1,12 +1,12 @@
 package klotski;
 
 import javax.swing.SwingUtilities;
-import klotski.view.InitialMenu;
+import klotski.controller.InitialMenuController;
 
 public class Main {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
-            new InitialMenu();
+            new InitialMenuController();
         });
 	}
 }

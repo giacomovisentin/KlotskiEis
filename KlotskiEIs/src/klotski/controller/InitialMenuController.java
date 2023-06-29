@@ -1,20 +1,20 @@
-package klotski.view;
+package klotski.controller;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import klotski.controller.FileController;
 import klotski.model.Board;
+import klotski.view.KlotskiApp;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.file.Paths;
 
-public class InitialMenu extends JFrame {
+public class InitialMenuController extends JFrame {
     private static final long serialVersionUID = 1L;
 
-	public InitialMenu() {
+	public InitialMenuController() {
         setTitle("Menu Iniziale");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -34,7 +34,7 @@ public class InitialMenu extends JFrame {
             	Board b = new Board();
         		KlotskiApp app = KlotskiApp.getInstance(b);
         		
-        		ConfigurationMenu conf = new ConfigurationMenu(app, b, InitialMenu.this);
+        		ConfigurationMenuController conf = new ConfigurationMenuController(app, b, InitialMenuController.this);
         		conf.setVisible(true);
             }
         });
@@ -59,8 +59,8 @@ public class InitialMenu extends JFrame {
 
         esciButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-				if (new FileController(null, null, null).confirmExit(InitialMenu.this)) {
-					InitialMenu.this.dispose();
+				if (new FileController(null, null, null).confirmExit(InitialMenuController.this)) {
+					InitialMenuController.this.dispose();
 				}
 			}
         });

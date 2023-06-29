@@ -4,7 +4,6 @@ package klotski.controller;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.awt.event.MouseEvent;
 import klotski.model.Board;
 import klotski.view.KlotskiApp;
 
