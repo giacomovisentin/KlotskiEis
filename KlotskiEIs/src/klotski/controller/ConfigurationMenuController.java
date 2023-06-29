@@ -1,4 +1,4 @@
-package klotski.view;
+package klotski.controller;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -15,15 +15,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import klotski.model.Board;
-import klotski.controller.FileController;
+import klotski.view.KlotskiApp;
 
-public class ConfigurationMenu extends JFrame {
+public class ConfigurationMenuController extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	KlotskiApp app;
 	Board b;
 
-	public ConfigurationMenu(KlotskiApp app, Board b, InitialMenu im) {
+	public ConfigurationMenuController(KlotskiApp app, Board b, InitialMenuController im) {
 		this.app = app;
 		this.b = b;
 		

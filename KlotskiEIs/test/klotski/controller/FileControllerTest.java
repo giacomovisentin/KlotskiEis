@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import javax.swing.JOptionPane;
 import java.nio.file.Path;
-import klotski.view.InitialMenu;
 import klotski.view.KlotskiApp;
 import klotski.model.Board;
 
@@ -17,7 +16,7 @@ class FileControllerTest {
     private KlotskiApp app;
     private Board board;
     private Path filePath;
-    private InitialMenu menu;
+    private InitialMenuController menu;
 
     @BeforeEach
     void setUp() {

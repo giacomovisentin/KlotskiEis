@@ -139,7 +139,7 @@ class BoardTest {
         Piece singlePiece = new Piece(1, 2, 2, 2);
         Board testBoard = new Board(new Piece[] {singlePiece});
         testBoard.selectPiece(2, 2);
-        Exception exception=assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             testBoard.movePiece(4); //giustamente lancia un'eccezione
         });
     }
@@ -192,7 +192,7 @@ class BoardTest {
             tooLong.add(new Piece(1, 1, 1, 1).toString());
         }
         Board b = new Board();
-        Exception exception=assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             b.setPieces(tooLong);
         });
         
@@ -202,7 +202,7 @@ class BoardTest {
     public void testSetPiecesExceptionTooShort() {
         Board b = new Board();
         List<String> tooShort = new ArrayList<String>();
-        Exception exception=assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             b.setPieces(tooShort);
         });
     }
@@ -228,7 +228,7 @@ class BoardTest {
 	//si controlla il funzionamento di getConfig;
 	@Test
 	public void getConfigTest() {
-		Board b= new Board();
+		Board b = new Board();
 		b.setConfig(3);
 		b.reset();
 		assertEquals(3, b.getConfig());
@@ -248,7 +248,7 @@ class BoardTest {
 	@Test
     public void testGetBoard() {
         
-        Board b= new Board();
+        Board b = new Board();
         
         List<String> lines = new ArrayList<>();
         

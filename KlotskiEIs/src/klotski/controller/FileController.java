@@ -3,7 +3,6 @@ package klotski.controller;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import klotski.model.Board;
-import klotski.view.InitialMenu;
 import klotski.view.KlotskiApp;
 
 public class FileController {
@@ -113,7 +111,7 @@ public class FileController {
 				null, null) == JOptionPane.OK_OPTION;	
 	}
 	
-	public boolean confirmExit(InitialMenu menu) {
+	public boolean confirmExit(InitialMenuController menu) {
 		return JOptionPane.showOptionDialog (menu, 
 				"Are you sure you want to quit?", "Klotski - Confirm Quit",
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null,

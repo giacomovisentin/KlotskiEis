@@ -2,12 +2,9 @@ package klotski.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import klotski.model.Board;
@@ -114,19 +111,6 @@ public class PuzzleView extends JPanel {
 		offScreenGraphics.setColor(Color.decode("#e06d78"));
 		offScreenGraphics.fillRect(squareSize, squareSize * board.getHeight(),
 				squareSize * 2, 6);
-		
-		// congratulate the player if he/she has won
-		if (board.checkWin()) {
-			showWin();
-			KlotskiApp.close();
-			new InitialMenu();
-		}
-	}
-	
-	public void showWin() {
-		Image resizedIcon = new ImageIcon(this.getClass().getResource("/win.png")).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);;
-        ImageIcon icon = new ImageIcon(resizedIcon);
-		JOptionPane.showMessageDialog(app, "<html><h1 style='font-size: 36pt;'>Congratulations! You win!", "Klotski - WIN", JOptionPane.INFORMATION_MESSAGE, icon);
 	}
 	
 	/**

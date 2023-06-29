@@ -1,8 +1,10 @@
 package klotski.controller;
 
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.util.*;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import java.io.IOException;
@@ -38,6 +40,13 @@ public class GameController {
 		if (b.movePiece(direction)) {
 			app.getMovesCounter().setText(Integer.toString(b.getMoves()));
 			app.getPuzzleView().refresh();
+			// congratulate the player if he/she has won
+			if (b.checkWin()) {
+				showWin();
+				KlotskiApp.close();
+				new InitialMenuController();
+				return true;
+			} 
 			return true;
 		}
 			return false;
@@ -145,11 +154,23 @@ public class GameController {
 	    if(found) {
 	    	b.setMoves(++m);
 	    	b.pushIntoStack();
-			app.getPuzzleView().refresh();
 			app.getMovesCounter().setText(Integer.toString(b.getMoves()));
+			app.getPuzzleView().refresh();
+			// congratulate the player if he/she has won
+			if (b.checkWin()) {
+				showWin();
+				KlotskiApp.close();
+				new InitialMenuController();
+			} 
 	    } else {
 	    	JOptionPane.showMessageDialog(app, "Unable to find the next best move", "Hint error", JOptionPane.ERROR_MESSAGE);
 	    }
 		return found;
+	}
+	
+	public void showWin() {
+		Image resizedIcon = new ImageIcon(this.getClass().getResource("/win.png")).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);;
+        ImageIcon icon = new ImageIcon(resizedIcon);
+		JOptionPane.showMessageDialog(app, "<html><h1 style='font-size: 36pt;'>Congratulations! You win!", "Klotski - WIN", JOptionPane.INFORMATION_MESSAGE, icon);
 	}
 }

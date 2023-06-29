@@ -28,6 +28,7 @@ import klotski.controller.AboutController;
 import klotski.controller.LicenseController;
 import klotski.controller.FileController;
 import klotski.controller.GameController;
+import klotski.controller.InitialMenuController;
 
 public class KlotskiApp extends JFrame {
 	Board board;	
@@ -69,6 +70,7 @@ private static KlotskiApp instance;
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("deprecation")
 	public KlotskiApp(Board b) {
 		this.board = b;
 		setTitle("Klotski");
@@ -107,7 +109,7 @@ private static KlotskiApp instance;
 					String path = fc.getSelectedFile().getAbsolutePath();
 					new FileController(board, Paths.get(path)).save();
 					KlotskiApp.close();
-					new InitialMenu();
+					new InitialMenuController();
 				}
 			}
 		});
@@ -140,7 +142,7 @@ private static KlotskiApp instance;
 			public void actionPerformed(ActionEvent e) {
 				if (new FileController(b).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.close();
-					new InitialMenu();
+					new InitialMenuController();
 				}
 			}
 		});
@@ -386,7 +388,7 @@ private static KlotskiApp instance;
 			public void actionPerformed(ActionEvent arg0) {
 				if (new FileController(b).confirmQuit(KlotskiApp.this)) {
 					KlotskiApp.close();
-					new InitialMenu();
+					new InitialMenuController();
 				}
 			}
 		});
