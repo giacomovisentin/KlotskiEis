@@ -1,6 +1,7 @@
 package klotski.controller;
 
 import java.awt.Dimension;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -17,12 +18,22 @@ import javax.swing.border.EmptyBorder;
 import klotski.model.Board;
 import klotski.view.KlotskiApp;
 
+/**
+ * Controller ConfigurationMenuController crea il menu iniziale quando si clicca su 'Nuova partita' di InitialMenuController.
+ * Una volta aperto il menu e' possibile scegliere tra 4 configurazioni per iniziare a giocare.
+ */
 public class ConfigurationMenuController extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	KlotskiApp app;
 	Board b;
-
+	
+	/**
+	 * Costruttore della classe che crea la finestra di dialogo con le 4 configurazioni tra cui scegliere
+	 * @param app la visualizzazione dell'applicazione
+	 * @param b lo stato della Board
+	 * @param im menu interattivo
+	 */
 	public ConfigurationMenuController(KlotskiApp app, Board b, InitialMenuController im) {
 		this.app = app;
 		this.b = b;

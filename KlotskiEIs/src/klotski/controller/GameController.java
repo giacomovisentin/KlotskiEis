@@ -15,15 +15,17 @@ import java.nio.file.Paths;
 
 import klotski.model.Board;
 import klotski.view.KlotskiApp;
-
+/**
+ * Classe GameController che si occupa di selezionare e muovere i pezzi nella board.
+ */
 public class GameController {
 	final KlotskiApp app;
 	final Board b;
 	
 	/**
-	 * Basic constructor
-	 * @param app the view application
-	 * @param b the model board
+	 * Costruttore del controller.
+	 * @param app la visualizzazione dell'applicazione
+	 * @param b il modello della Board
 	 */
 	public GameController(KlotskiApp app, Board b) {
 		this.app = app;
@@ -31,10 +33,11 @@ public class GameController {
 	}
 	
 	/**
-	 * Attempts to move the selected piece in the input direction. Does nothing
-	 * if no piece is selected. If move is successful, updates moves counter
-	 * @param direction 0=up, 1=right, 2=down, 3=right
-	 * @return true if move was successful, false otherwise
+	 * Prova a muovere il pezzo selezionato nella direzione passata come input.
+	 * Non succede nulla se nessun pezzo viene selezionato.
+	 * Se la mossa avviene con successo, incrementa di 1 il contatore delle mosse.
+	 * @param direction 0=su, 1=destra, 2=giu', 3=sinistra
+	 * @return true se la mossa e' avvenuta con successo, false altrimenti.
 	 */
 	public boolean move(int direction) {
 		if (b.movePiece(direction)) {
@@ -52,6 +55,12 @@ public class GameController {
 			return false;
 	}
 	
+	/**
+	 * Prova a tornare indietro di una mossa.
+	 * Non succede nulla se non è' ancora stata effettuata la prima mossa.
+	 * Se l'undo avviene con successo, decrementa di 1 il contatore delle mosse
+	 * @return true se viene ripristinata l'ultima mossa con successo, false altrimenti.
+	 */
 	public boolean undo() {
 		if (b.undo()) {
 			app.getMovesCounter().setText(Integer.toString(b.getMoves()));
@@ -63,10 +72,10 @@ public class GameController {
 	}
 	
 	/**
-	 * Extracts the x and y coordinates of the point clicked and attempts to
-	 * select the Piece occupying that point
-	 * @param e the MouseEvent passed from the view
-	 * @return true if a Piece was successfully selected, false otherwise
+	 * Estrae le coordinate x e y del punto cliccato e prova a selezionare il pezzo Piece
+	 * che occupa tale punto.
+	 * @param e il MouseEvent passato da PuzzleView
+	 * @return true se il pezzo Piece e' stato selezionato con successo, false altrimenti
 	 */
 	public boolean select(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1) {
@@ -85,12 +94,16 @@ public class GameController {
 		return false;
 	}
 	
+	/**
+	 * Cerca la mossa migliore per provare a vincere tra le configurazioni salvate di cui si conosce la nextBestMove
+	 * Se la mossa viene trovata, viene aggiornato il contatore delle mosse e viene aggioranato il diplay
+	 * @return true se la mossa e' stata trovata e compiuta, false altrimenti
+	 */
 	public boolean nextBestMove() {
 		boolean found = false;
 		int end = 12;
 		int m = b.getMoves();
 		
-		//Funzionerà in un file .jar?????? mi sa di no. Occhio anche a initialMenu.java...
         ClassLoader classLoader = GameController.class.getClassLoader();
         String fileName = "";
         Path p = null;
@@ -168,6 +181,9 @@ public class GameController {
 		return found;
 	}
 	
+	/**
+	 * Crea una  nuova finestra di dialogo con l'utente per congratularsi in caso di vittoria
+	 */
 	public void showWin() {
 		Image resizedIcon = new ImageIcon(this.getClass().getResource("/win.png")).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);;
         ImageIcon icon = new ImageIcon(resizedIcon);
