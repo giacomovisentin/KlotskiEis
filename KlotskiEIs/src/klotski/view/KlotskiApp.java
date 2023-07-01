@@ -88,8 +88,7 @@ private static KlotskiApp instance;
 	 * Costruttore che crea il frame del gioco composto da interfaccia e bottoni 
 	 * @param b lo stato della Board
 	 */
-	@SuppressWarnings("deprecation")
-	public KlotskiApp(Board b) {
+	private KlotskiApp(Board b) {
 		this.board = b;
 		setTitle("Klotski");
 		setFocusable(true);
