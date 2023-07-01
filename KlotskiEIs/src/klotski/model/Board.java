@@ -5,38 +5,34 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * Represents the entire game board, containing several pieces
- * @author Joseph Petitti
- *
+ * Classe che rappresenta la Board e l'insieme dei pezzi Piece
  */
 public class Board {
 	Piece[] pieces;
 	Piece selected;
 	int height;
 	int width;
-	int moves; // number of moves the player has made
+	int moves; // numero di mosse effettuate dal giocatore
 	int configuration;
 	boolean hasWon;
 	Stack<List<String>> pila;
 	
 	/**
-	 * Basic constructor. Initializes height and width to standard klotski size.
-	 * Initializes pieces to configuration 1
+	 * Costruttore base che inizializza altezza e larghezza ai valori standard del klotski.
+	 * Inizializza tutti i pezzi secondo la configurazione 1 e pone a 0 il numero delle mosse.
 	 */
 	public Board() {
 		this.pieces = new Piece[10];
 		this.configuration = 1;
 		this.pila = new Stack<>();
 		reset();
-		// initialize all pieces to configuration 1, set moves to 0, set
-		// selectedPiece to null, and set hasWon to false
 		this.height = 5;
 		this.width = 4;
 	}
 	
 	/**
-	 * Custom constructor that uses a custom array of pieces
-	 * @param pieces the custom array of pieces that this board holds
+	 * Costruttore custom che usa un array custom di pezzi
+	 * @param pieces l'array di pezzi posizionati sulla Board
 	 */
 	public Board(Piece[] pieces) {
 		this.pieces = pieces;
@@ -50,8 +46,8 @@ public class Board {
 	}
 	
 	/**
-	 * Sets configuration to the given number
-	 * @param number input to set configuration to
+	 * Pone la configurazione al numero passato in input
+	 * @param number numero con cui si vuole porre la configurazione della Board
 	 */
 	public void setConfig(int number) {
 		this.configuration = number;
@@ -84,13 +80,13 @@ public class Board {
 	
 	/**
 	 * hasWon getter
-	 * @return whether the play has won
+	 * @return true se il giocatore ha vinto, falso altrimenti
 	 */
 	public boolean checkWin() { return hasWon; }
 	
 	/**
 	 * move getter
-	 * @return the current number of moves
+	 * @return il counter delle mosse effettuate
 	 */
 	public int getMoves() { return moves; }
 	
@@ -100,33 +96,33 @@ public class Board {
 	
 	/**
 	 * selectedPiece getter
-	 * @return this board's selectedPiece
+	 * @return il pezzo Piece selezionato
 	 */
 	public Piece getSelectedPiece() { return selected; }
 	
 	/**
 	 * width getter
-	 * @return this board's width
+	 * @return la larghezza della Board
 	 */
 	public int getWidth() { return width; }
 	
 	/**
 	 * height getter
-	 * @return this board's height
+	 * @return l'altezza della Board
 	 */
 	public int getHeight() { return height; }
 	
 	/**
 	 * pieces getter
-	 * @return this board's pieces
+	 * @return l'array dei pezzi della Board
 	 */
 	public Piece[] getPieces() { return pieces; }
 	
 	/**
-	 * selects the piece at the given x and y coordinates
-	 * @param x the x coordinate of the point in the piece you want to select
-	 * @param y the y coordinate of the point in the piece you want to select
-	 * @return true if a piece was selected, false otherwise
+	 * Seleziona il pezzo corrispondente alle x e y date
+	 * @param x la coordinata x del punto che si vuole selezionare
+	 * @param y la coordinata y del punto che si vuole selezionare
+	 * @return true se un pezzo e' stato selezionato, false altrimenti
 	 */
 	public boolean selectPiece(int x, int y) {
 		for (Piece p : pieces) {
@@ -136,17 +132,15 @@ public class Board {
 			}
 		}
 		
-		// if we get here then they clicked on an empty square, so deselect
-		// the piece
 		selected = null;
 		return false;
 	}
 	
 	/**
-	 * Checks whether there is a piece occupying a given point
-	 * @param x the x coordinate of the point to check
-	 * @param y the y coordinate of the point to check
-	 * @return true if the point is occupied
+	 * Controlla se un dato punto di coordinate (x,y) è occupato da un pezzo
+	 * @param x la coordinata x del punto da controllare
+	 * @param y la coordinata y del punto da controllare
+	 * @return true se il punto e' occupato, false altrimenti
 	 */
 	public boolean isOccupied(int x, int y) {
 		for (Piece p : pieces) {
@@ -159,9 +153,9 @@ public class Board {
 	}
 	
 	/**
-	 * Tries to move the selected piece in the given direction
-	 * @param direction 0=up, 1=right, 2=down, 3=left
-	 * @return true if the move was successful, false otherwise
+	 * Prova a muovere il pezzo selezionato nella direzione data
+	 * @param direzione 0=su, 1=destra, 2=giu', 3=sinistra
+	 * @return true se il pezzo e' stato mosso con successo, false altrimenti
 	 */
 	public boolean movePiece(int direction) {
 		int i;
@@ -218,13 +212,15 @@ public class Board {
 			throw new IllegalArgumentException("direction must be 0..3");
 		}
 		
-		// if we've gotten here it means we're clear to move the selected piece
 		selected.move(direction);
 		++moves;
 		pushIntoStack();
 		return true;
 	}
-	
+	/**
+	 * Prova a ripristinare la Board nello stato precedente a quello attuale.
+	 * @return true se viene ripristinata l'ultima mossa con successo, false altrimenti.
+	 */
 	public boolean undo() {
 		
 		if (this.moves > 0 && pila.size() > 1) {
@@ -237,9 +233,8 @@ public class Board {
 			return false;
 	}
 
-	/*
-	 * Sets all pieces to their original position for the current configuration,
-	 * sets moves to 0, sets selectedPiece to null, empties the stack and sets hasWon to false
+	/**
+	 * Ripristina i pezzi alle posizioni originali, coerentemente alla configurazione corrente.
 	 */
 	public void reset() {
 		pila.clear();
@@ -297,8 +292,8 @@ public class Board {
 	}
 	
 	/**
-	 * Converts the entire board to a string, for saving
-	 * @return the String version of this board
+	 * Converte la Board a stringa, trascrivendo le informazioni dei pezzi
+	 * @return la stringa che rappresenta la Board
 	 */
 	@Override
 	public String toString() {
@@ -308,7 +303,10 @@ public class Board {
 		}
 		return out;
 	}
-	
+	/**
+	 * Restituisce lo stato della Board e dei pezzi sotto forma di lista di stringhe
+	 * @return boardList la lista dei pezzi
+	 */
 	public List<String> getBoard(){
 		List<String> boardList = new ArrayList<>();
 		for (Piece p : pieces) {
@@ -317,8 +315,28 @@ public class Board {
 		return boardList;
 	}
 	
+	/**
+	 * Restituisce una stringa che salva lo stato della pila, 
+	 * ovvero la serie di tutte le mosse compiute e le board precedenti
+	 * @return out la stringa che rappresenta la pila
+	 */
+	public String stackToString() {
+		String out = "";
+		for(List<String> list : pila) {
+			out = out.concat(list.get(0)+ "\n");
+			for(int i=0 ; i < 10; i++) {
+				out = out.concat(list.get(i+1)+"\n");		
+			}			
+		}
+		return out;
+	}
+	/** Restituisce il numero della configurazione corrente */
 	public int getConfig() { return this.configuration; }
 	
+	/**
+	 * Inserisce nella pila lo stato corrente della Board come lista di stringhe,
+	 * la quale contiene il contatore delle mosse e lo stato dei pezzi
+	 */
 	public void pushIntoStack() {
 		List<String> lines = new ArrayList<>();
 		lines.add(""+this.moves);
@@ -326,7 +344,25 @@ public class Board {
 		pila.push(lines);
 	}
 	
+	/**
+	 * Inserisce nella pila lo stato della Board passato come parametro
+	 * @param lines lista che rappresenta il contatore delle mosse e i pezzi 
+	 */
+	public void pushIntoStack(List<String> lines) {
+		if (lines.size() != 11) {
+			throw new IllegalArgumentException("Illegal list of lines");
+		}
+		pila.push(lines);
+	}
+	
+	/** Svuota la pila delle mosse */
 	public void emptyStack() { pila.clear(); }
+	
+	/** Restituisce la dimensione della pila */
+	public int stackSize() { return pila.size(); }
+	
+	/** Restituisce l'elemento in cima alla pila */
+	public List<String> stackPeek() { return pila.peek(); }
 
 }
 	

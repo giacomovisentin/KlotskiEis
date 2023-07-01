@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 
 import klotski.model.Board;
 import klotski.model.Piece;
+/**
+ * Classe PuzzleView che si occupa di disegnare graficamente lo sfondo e i pezzi sopra di esso
+ */
 
 public class PuzzleView extends JPanel {
 	private static final long serialVersionUID = 3251334679791843551L;
@@ -16,22 +19,20 @@ public class PuzzleView extends JPanel {
 	KlotskiApp app;
 	Board board;
 	
-	/** Off-screen image for drawing (and Graphics object) */
 	Image offScreenImage = null;
 	Graphics offScreenGraphics = null;
 	
-	/** space between pieces and at edges */
-	final int spacing = 5;
+	final int spacing = 5;		//spazio tra i quadrati
+	final int squareSize = 100; //dimensione singolo quadrato
 	
-	/** size of a single square on the board */
-	final int squareSize = 100;
-	
-	/** squareSize getter */
+	/**
+	 * Restituisce la dimensione di un singolo quadrato della Board 
+	 */
 	public int getSquareSize() { return squareSize; }
 	
 	/**
-	 * Basic constructor
-	 * @param b the model Board
+	 * Costruttore base
+	 * @param b il modello della Board
 	 */
 	public PuzzleView(KlotskiApp p, Board b) {
 		this.app = p;
@@ -39,7 +40,7 @@ public class PuzzleView extends JPanel {
 	}
 	
 	/**
-	 * Set the size depending on the height and width of the puzzle
+	 * Fissa le dimensioni dipendentemente  da altezza e larghezza del puzzle
 	 */
 	@Override
 	public Dimension getPreferredSize() {
@@ -50,7 +51,7 @@ public class PuzzleView extends JPanel {
 	}
 	
 	/**
-	 * Draws the background and all pieces
+	 * Disegna lo sfondo e i pezzi
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -70,7 +71,7 @@ public class PuzzleView extends JPanel {
 	}
 	
 	/**
-	 * draws background and then all pieces on top of it
+	 * Disegna lo sfondo e successivamente i pezzi sopra di esso
 	 */
 	public void redraw() {
 		if (offScreenImage == null) { return; }
@@ -114,7 +115,7 @@ public class PuzzleView extends JPanel {
 	}
 	
 	/**
-	 * redraws the whole PuzzleView when pieces are changed
+	 * Ridisegna l'intero PuzzleView quando i pezzi vengono mossi
 	 */
 	public void refresh() {
 		if (offScreenImage == null) { return; }
