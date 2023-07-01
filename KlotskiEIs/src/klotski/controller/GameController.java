@@ -7,11 +7,11 @@ import java.util.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import klotski.model.Board;
 import klotski.view.KlotskiApp;
@@ -100,85 +100,71 @@ public class GameController {
 	 * @return true se la mossa e' stata trovata e compiuta, false altrimenti
 	 */
 	public boolean nextBestMove() {
-		boolean found = false;
-		int end = 12;
-		int m = b.getMoves();
-		
-        ClassLoader classLoader = GameController.class.getClassLoader();
-        String fileName = "";
-        Path p = null;
-        int conf = b.getConfig();
+	    boolean found = false;
+	    int m = b.getMoves();
 
-        if(conf == 2) {
-        	fileName = "conf2Solver.txt";
-        } else if(conf == 4) {
-        	fileName = "conf4Solver.txt";
-        } else {
-        	JOptionPane.showMessageDialog(app, "Unable to find the next best move", "Hint error", JOptionPane.ERROR_MESSAGE);
-        	return false;
-        }
-        
-		try {
-			p = Paths.get(classLoader.getResource(fileName).toURI());
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-        
-	    List<String> lines = new ArrayList<>();
-    	
-	    try {
-			end = Files.readAllLines(p).size();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	    for(int i = 0; !found && i < end;) {
-	    	for(int j = 0; j < 11; i++) {
-	    		try {
-					lines.add(Files.readAllLines(p).get(i));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	    		j++;
-	    	}
+	    ClassLoader classLoader = GameController.class.getClassLoader();
+	    String fileName = "";
+	    int conf = b.getConfig();
 
-	    	lines.remove(0);
-	    	
-	    	if(lines.equals(b.getBoard())) {
-	    		lines.removeAll(lines);
-	    		for(int r = i; r < i+11; r++) {
-	    			try {
-						lines.add(Files.readAllLines(p).get(r));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-	    		}
-	    		try {
-					b.setPieces(lines);
-				} catch (Exception e) {
-					System.err.println(e);
-				}
-	    		
-	    		found = true;
-	    	} else {
-	    		lines.removeAll(lines);
-	    	}
+	    if (conf == 2) {
+	        fileName = "conf2Solver.txt";
+	    } else if (conf == 4) {
+	        fileName = "conf4Solver.txt";
+	    } else {
+	        JOptionPane.showMessageDialog(app, "Unable to find the next best move", "Hint error", JOptionPane.ERROR_MESSAGE);
+	        return false;
+	    }
+
+	    try (InputStream inputStream = classLoader.getResourceAsStream(fileName);
+	         InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+	         BufferedReader reader = new BufferedReader(inputStreamReader)) {
+
+	        String line;
+	        List<String> lines = new ArrayList<>();
+	        while (!found && (line = reader.readLine()) != null) {
+	        		lines.add(line);
+	            for (int j = 0; j < 10; j++) {
+	            	line = reader.readLine();
+	                lines.add(line);
+	            }
+	            lines.remove(0);
+	            if (lines.equals(b.getBoard())) {
+	                lines.removeAll(lines);
+	                for (int r = 0; r < 11; r++) {
+	                	line = reader.readLine();
+	                    lines.add(line);
+	                }
+	                try {
+	                    b.setPieces(lines);
+	                } catch (Exception e) {
+	                    System.err.println(e);
+	                }
+
+	                found = true;
+	            } else {
+	                lines.removeAll(lines);
+	            }
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
+	    if (found) {
+	        b.setMoves(++m);
+	        b.pushIntoStack();
+	        app.getMovesCounter().setText(Integer.toString(b.getMoves()));
+	        app.getPuzzleView().refresh();
+	        if (b.checkWin()) {
+	            showWin();
+	            KlotskiApp.close();
+	            new InitialMenuController();
+	        }
+	    } else {
+	        JOptionPane.showMessageDialog(app, "Unable to find the next best move", "Hint error", JOptionPane.ERROR_MESSAGE);
 	    }
 	    
-	    if(found) {
-	    	b.setMoves(++m);
-	    	b.pushIntoStack();
-			app.getMovesCounter().setText(Integer.toString(b.getMoves()));
-			app.getPuzzleView().refresh();
-			// congratulate the player if he/she has won
-			if (b.checkWin()) {
-				showWin();
-				KlotskiApp.close();
-				new InitialMenuController();
-			} 
-	    } else {
-	    	JOptionPane.showMessageDialog(app, "Unable to find the next best move", "Hint error", JOptionPane.ERROR_MESSAGE);
-	    }
-		return found;
+	    return found;
 	}
 	
 	/**
