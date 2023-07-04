@@ -13,12 +13,18 @@ import javax.swing.JOptionPane;
 import klotski.model.Board;
 import klotski.view.KlotskiApp;
 /**
- * Classe FileController che si occupa di aprire una partita salvata su un file, di salvare la partita corrente,
+ * Controller FileController che si occupa di aprire una partita salvata su un file, di salvare la partita corrente,
  * di terminare la partita senza salvare e di resettare la partita alla configurazione originale.
  */
 public class FileController {
+	
+	/** Visualizzazione dell'applicazione */
 	KlotskiApp app;
+	
+	/** Modello della Board */
 	Board b;
+	
+	/** Percorso del file che voglio salvare o aprire */
 	final Path p;
 	
 	/**

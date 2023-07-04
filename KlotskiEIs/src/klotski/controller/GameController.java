@@ -16,10 +16,14 @@ import java.nio.charset.StandardCharsets;
 import klotski.model.Board;
 import klotski.view.KlotskiApp;
 /**
- * Classe GameController che si occupa di selezionare e muovere i pezzi nella board.
+ * Controller GameController che si occupa di selezionare e muovere i pezzi nella board.
  */
 public class GameController {
+	
+	/** Visualizzazione dell'applicazione */
 	final KlotskiApp app;
+	
+	/** Modello della Board */
 	final Board b;
 	
 	/**
@@ -96,7 +100,7 @@ public class GameController {
 	
 	/**
 	 * Cerca la mossa migliore per provare a vincere tra le configurazioni salvate di cui si conosce la nextBestMove
-	 * Se la mossa viene trovata, viene aggiornato il contatore delle mosse e viene aggioranato il diplay
+	 * Se la mossa viene trovata, viene aggiornato il contatore delle mosse e viene aggioranato il display
 	 * @return true se la mossa e' stata trovata e compiuta, false altrimenti
 	 */
 	public boolean nextBestMove() {

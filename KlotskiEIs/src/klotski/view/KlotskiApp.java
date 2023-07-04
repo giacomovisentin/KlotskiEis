@@ -28,14 +28,32 @@ import klotski.controller.InitialMenuController;
  * e della visualizzazione della Board
  */
 public class KlotskiApp extends JFrame {
-	Board board;	
+	
+	/** Modello della Board */
+	Board board;
+	
+	/** Interfaccia grafica */
 	PuzzleView puzzleView;
+	
+	/** Contatore delle mosse */
 	JLabel movesCounter;
+	
+	/** Bottone per il reset */
 	JButton btnReset;
+	
+	/** Bottone per l'aiuto */
 	JButton btnHint;
+	
+	/** Bottone per l'undo */
 	JButton btnUndo;
+	
+	/** Bottone per salvare */
 	JButton btnSave;
+	
+	/** Bottone per uscire */
 	JButton btnQuit;
+	
+	/** Punto salvato per il calcolo dello spostamento del cursore */
 	Point storedPoint;
 	
 private static KlotskiApp instance;
@@ -65,21 +83,49 @@ private static KlotskiApp instance;
 	
 	private static final long serialVersionUID = 5052390254637954176L;
 	
+	/** Pannello che crea l'interfaccia grafica con i vari bottoni */
 	private JPanel contentPane;
 
-	/** @return il display del contatore delle mosse */
+	/** 
+	 * Restituisce l'etichetta che mostra il contatore delle mosse
+	 * @return il display del contatore delle mosse 
+	 */
 	public JLabel getMovesCounter() { return movesCounter; }
-	/** @return il disegno dei pezzi sulla board visualizzati sull'interfaccia */
+	
+	/** 
+	 * Restituisce la view del puzzle
+	 * @return il disegno dei pezzi sulla board visualizzati sull'interfaccia 
+	 */
 	public PuzzleView getPuzzleView() { return puzzleView; }
-	/** @return bottone interattivo per la funzione 'Reset' */
+	
+	/** 
+	 * Bottone per il reset
+	 * @return bottone interattivo per la funzione 'Reset' 
+	 */
 	public JButton getResetButton() { return btnReset; }
-	/** @return bottone interattivo per la funzione 'Hint' */
+	
+	/** 
+	 * Bottone per l'aiuto
+	 * @return bottone interattivo per la funzione 'Hint' 
+	 */
 	public JButton getHintButton() { return btnHint; }
-	/** @return bottone interattivo per la funzione 'Undo' */
+	
+	/**
+	 * Bottone per la funzione undo
+	 *  @return bottone interattivo per la funzione 'Undo' 
+	 */
 	public JButton getUndoButton() { return btnUndo; }
-	/** @return bottone interattivo per la funzione 'Save as...' */
+	
+	/**
+	 * Bottone per il salvataggio su file
+	 *  @return bottone interattivo per la funzione 'Save as...' 
+	 */
 	public JButton getSaveButton() { return btnSave; }
-	/** @return bottone interattivo per la funzione 'Quit' */
+	
+	/**
+	 * Bottone per uscire dal gioco senza salvare
+	 *  @return bottone interattivo per la funzione 'Quit' 
+	 */
 	public JButton getQuitButton() { return btnQuit; }
 	
 
