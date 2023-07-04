@@ -16,22 +16,34 @@ import klotski.model.Piece;
 public class PuzzleView extends JPanel {
 	private static final long serialVersionUID = 3251334679791843551L;
 	
+	/** Visualizzazione dell'applicazione */
 	KlotskiApp app;
+	
+	/** Modello della Board */
 	Board board;
 	
+	
+	/** Lo spazio dedicato alla grafica */
 	Image offScreenImage = null;
+	
+	/** La grafica che effettivamente colora e disegna i pezzi */
 	Graphics offScreenGraphics = null;
 	
-	final int spacing = 5;		//spazio tra i quadrati
-	final int squareSize = 100; //dimensione singolo quadrato
+	/** Spazio tra i quadrati disegnati */
+	final int spacing = 5;
+	
+	/** Dimensione del singolo quadrato */
+	final int squareSize = 100;
 	
 	/**
-	 * Restituisce la dimensione di un singolo quadrato della Board 
+	 * Restituisce la dimensione di un singolo quadrato della Board
+	 * @return la dimensione di un quadrato nel disegno della Board
 	 */
 	public int getSquareSize() { return squareSize; }
 	
 	/**
 	 * Costruttore base
+	 * @param p la visualizzazione dell'applicazione
 	 * @param b il modello della Board
 	 */
 	public PuzzleView(KlotskiApp p, Board b) {
@@ -52,6 +64,7 @@ public class PuzzleView extends JPanel {
 	
 	/**
 	 * Disegna lo sfondo e i pezzi
+	 * @param g componenti grafiche da disegnare
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

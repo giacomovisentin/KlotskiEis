@@ -8,13 +8,44 @@ import java.util.Stack;
  * Classe che rappresenta la Board e l'insieme dei pezzi Piece
  */
 public class Board {
+	/**
+	 * Array dei pezzi posizionati sulla Board
+	 */
 	Piece[] pieces;
+	
+	/**
+	 * Pezzo selezionato per effettuare delle azioni su esso
+	 */
 	Piece selected;
+	
+	/**
+	 * Altezza della Board
+	 */
 	int height;
+	
+	/**
+	 * Larghezza della Board
+	 */
 	int width;
-	int moves; // numero di mosse effettuate dal giocatore
+	
+	/**
+	 * Counter delle mosse effettuate
+	 */
+	int moves;
+	
+	/**
+	 * Numero della configurazione iniziale su cui si ha iniziato a giocare
+	 */
 	int configuration;
+	
+	/**
+	 * Condizione di vittoria
+	 */
 	boolean hasWon;
+	
+	/**
+	 * Pila contenente tutte le mosse effettuate da inizio partita
+	 */
 	Stack<List<String>> pila;
 	
 	/**
@@ -90,6 +121,10 @@ public class Board {
 	 */
 	public int getMoves() { return moves; }
 	
+	/**
+	 * Pone il contatore delle mosse pari al numero passato in input
+	 * @param m numero di mosse
+	 */
 	public void setMoves(int m){
 		this.moves = m;
 	}
@@ -154,7 +189,7 @@ public class Board {
 	
 	/**
 	 * Prova a muovere il pezzo selezionato nella direzione data
-	 * @param direzione 0=su, 1=destra, 2=giu', 3=sinistra
+	 * @param direction 0=su, 1=destra, 2=giu', 3=sinistra
 	 * @return true se il pezzo e' stato mosso con successo, false altrimenti
 	 */
 	public boolean movePiece(int direction) {
@@ -305,7 +340,7 @@ public class Board {
 	}
 	/**
 	 * Restituisce lo stato della Board e dei pezzi sotto forma di lista di stringhe
-	 * @return boardList la lista dei pezzi
+	 * @return la lista dei pezzi
 	 */
 	public List<String> getBoard(){
 		List<String> boardList = new ArrayList<>();
@@ -318,7 +353,7 @@ public class Board {
 	/**
 	 * Restituisce una stringa che salva lo stato della pila, 
 	 * ovvero la serie di tutte le mosse compiute e le board precedenti
-	 * @return out la stringa che rappresenta la pila
+	 * @return la stringa che rappresenta la pila
 	 */
 	public String stackToString() {
 		String out = "";
@@ -330,7 +365,10 @@ public class Board {
 		}
 		return out;
 	}
-	/** Restituisce il numero della configurazione corrente */
+	/** 
+	 * Restituisce il numero della configurazione corrente
+	 * @return numero della configurazione della Board
+	 */
 	public int getConfig() { return this.configuration; }
 	
 	/**
@@ -358,10 +396,16 @@ public class Board {
 	/** Svuota la pila delle mosse */
 	public void emptyStack() { pila.clear(); }
 	
-	/** Restituisce la dimensione della pila */
+	/** 
+	 * Restituisce la dimensione della pila
+	 * @return la dimensione della pila
+	 */
 	public int stackSize() { return pila.size(); }
 	
-	/** Restituisce l'elemento in cima alla pila */
+	/** 
+	 * Ispeziona l'elemento in cima alla pila senza toglierlo
+	 * @return l'ultimo elemento aggiunto alla pila
+	 */
 	public List<String> stackPeek() { return pila.peek(); }
 
 }

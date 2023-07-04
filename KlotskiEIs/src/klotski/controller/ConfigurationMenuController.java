@@ -25,7 +25,11 @@ import klotski.view.KlotskiApp;
 public class ConfigurationMenuController extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
+	
+	/** Visualizzazione dell'applicazione */
 	KlotskiApp app;
+	
+	/** Modello della Board */
 	Board b;
 	
 	/**

@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.nio.file.Paths;
 
 /**
- * Controllore InitialMenuController crea il menu che si vede quando si esegue l'applicazione, 
+ * Controller InitialMenuController crea il menu che si vede quando si esegue l'applicazione, 
  * si salva una partita a file oppure si termina una partita.
  * Grazie a questo menu si puo' decidere se iniziare una nuova partita da zero, se caricarne una salvata
  * su file iniziata in precedenza o se chiudere l'applicazione.

@@ -4,10 +4,25 @@ package klotski.model;
  * Classe Piece che rappresenta un singolo pezzo della Board
  */
 public class Piece {
-	int x; // coordinata x dell'angolo in alto a sinistra del pezzo
-	int y; // coordinata y dell'angolo in alto a sinistra del pezzo
-	int w; // larghezza orizzontale del pezzo
-	int h; // altezza verticale del pezzo
+	/**
+	 * Coordinata x dell'angolo in alto a sinistra del pezzo
+	 */
+	int x;
+	
+	/**
+	 * Coordinata y dell'angolo in alto a sinistra del pezzo
+	 */
+	int y;
+	
+	/**
+	 * Larghezza orizzontale del pezzo
+	 */
+	int w;
+	
+	/**
+	 * Altezza verticale del pezzo
+	 */
+	int h;
 	
 	/**
 	 * Costruttore base per inizializzare il pezzo
